@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des acteurs{% endblock %}
+{% block pageTitle %}Liste des acteurs{% endblock %}
+
+{% block body %}
+<table width='100%'>
+    <thead>
+        <tr bgcolor='red'>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Films</th>
+            <th>Date de mort</th>
+            <th>Date de naissance</th>
+            <th>Photo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr> 
+            <td>{{ acteur.id }}</td>
+            <td>{{ acteur.nom }}</td>
+            <td>{{ acteur.prenom }}</td>
+            <td>{% for film in acteur.films %}
+            <a href="{{ url('film', {'id': film.id}) }}" >{{ film.titre }}</a>
+            {% endfor %}</td>
+            <td>
+            {% if acteur.DateDeMort is not null %}
+            {{ acteur.DateDeMort|date("d/m/Y") }}
+            {% endif %}
+            </td>
+            <td>{{ acteur.DateDeNaissance|date("d/m/Y")}}</td>
+            <td>
+            {% if acteur.photo is not null %}
+                <img src="{{ asset("photo/"~acteur.photo) }}" width="100" />
+            {% endif %}
+            </td>
+            <td>
+                <a href="{{ url('app_acteur_delete', {'acteur': acteur.id}) }}">Supprimer</a>
+                <a href="{{ url('app_acteur_edit', {'acteur': acteur.id}) }}">Modifier</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
